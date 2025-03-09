@@ -186,9 +186,12 @@ class Lamport:
         sk = SecretKey()
         pk = PublicKey()
 
-        # -----
-        # TODO: Votre code ici...
-        # ----
+        for i in range(256):
+            sk.zero_pre[i].data = secrets.token_bytes(32)
+            sk.one_pre[i].data = secrets.token_bytes(32)
+
+            pk.zero_hash[i].data = hashlib.sha256(sk.zero_pre[i].data).digest()
+            pk.one_hash[i].data = hashlib.sha256(sk.one_pre[i].data).digest()
 
         return sk, pk
 
